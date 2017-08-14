@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import PropTypes from 'prop-types'
+//import { Link } from 'react-router-dom'
 
 function ListBooks (props) {
   return (
@@ -11,14 +12,14 @@ function ListBooks (props) {
               <div className="book-cover" style={{
                 width: 128,
                 height: 193,
-                backgroundImage: `url(${book.coverURL})`
+                backgroundImage: `url(${book.imageLinks.thumbnail})`
               }}></div>
               <div className="book-shelf-changer">
-                <select>
-                  <option value="none" disabled>Move to...</option>
-                  <option value="currentlyReading">Currently Reading</option>
-                  <option value="wantToRead">Want to Read</option>
-                  <option value="read">Read</option>
+                <select className="book-change">
+                  <option selected={book.shelf === "none"} value="none" disabled>Move to...</option>
+                  <option selected={book.shelf === "currentlyReading"} value="currentlyReading">Currently Reading</option>
+                  <option selected={book.shelf === "wantToRead"} value="wantToRead">Want to Read</option>
+                  <option selected={book.shelf === "read"} value="read">Read</option>
                   <option value="none">None</option>
                 </select>
               </div>
@@ -30,6 +31,11 @@ function ListBooks (props) {
       ))}
     </ol>
   )
+}
+
+ListBooks.propTypes = {
+  books: PropTypes.array.isRequired,
+  onDeleteBook: PropTypes.func.isRequired
 }
 
 export default ListBooks
