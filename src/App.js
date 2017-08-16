@@ -16,10 +16,12 @@ class BooksApp extends React.Component {
     })
   }
 
-  removeBook = (book) => {
-    this.setState((state) => ({
-      books: state.books.filter((b) => b.id !== book.id)
-    }))
+
+  changeShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(
+      this.setState((state) => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([book])
+      })))
   }
 
   render() {
@@ -36,7 +38,7 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ListBooks
-                      onDeleteBook={this.removeBook}
+                      onChangeShelf={this.changeShelf}
                       books={this.state.books.filter(book => book.shelf === "currentlyReading")}
                     />
                   </div>
@@ -46,7 +48,7 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ListBooks
-                      onDeleteBook={this.removeBook}
+                      onChangeShelf={this.changeShelf}
                       books={this.state.books.filter(book => book.shelf === "wantToRead")}
                     />
                   </div>
@@ -56,11 +58,12 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
                     <ListBooks
-                      onDeleteBook={this.removeBook}
+                      onChangeShelf={this.changeShelf}
                       books={this.state.books.filter(book => book.shelf === "read")}
                     />
                   </div>
                 </div>
+
               </div>
             </div>
             <div className="open-search">

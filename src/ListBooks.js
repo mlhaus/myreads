@@ -15,11 +15,11 @@ function ListBooks (props) {
                 backgroundImage: `url(${book.imageLinks.thumbnail})`
               }}></div>
               <div className="book-shelf-changer">
-                <select className="book-change">
-                  <option selected={book.shelf === "none"} value="none" disabled>Move to...</option>
-                  <option selected={book.shelf === "currentlyReading"} value="currentlyReading">Currently Reading</option>
-                  <option selected={book.shelf === "wantToRead"} value="wantToRead">Want to Read</option>
-                  <option selected={book.shelf === "read"} value="read">Read</option>
+                <select className="book-change" onChange={(event) => props.onChangeShelf(book, event.target.value)}>
+                  <option value="none" disabled>Move to...</option>
+                  <option value="currentlyReading">Currently Reading</option>
+                  <option value="wantToRead">Want to Read</option>
+                  <option value="read">Read</option>
                   <option value="none">None</option>
                 </select>
               </div>
@@ -35,7 +35,7 @@ function ListBooks (props) {
 
 ListBooks.propTypes = {
   books: PropTypes.array.isRequired,
-  onDeleteBook: PropTypes.func.isRequired
+  onChangeShelf: PropTypes.func.isRequired
 }
 
 export default ListBooks
