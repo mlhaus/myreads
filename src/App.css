@@ -65,6 +65,7 @@ body, .app {
 /* search page */
 
 .search-books-bar {
+  background: #fff;
   position: fixed;
   width: 100%;
   top: 0;

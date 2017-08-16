@@ -1,8 +1,43 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import ListBooks from './ListBooks'
+import * as BooksAPI from './BooksAPI'
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 
 class SearchBooks extends Component {
+  state = {
+    books: [],
+    query: ''
+  }
+
+  updateQuery = (query) => {
+    this.setState({ query })
+    BooksAPI.search(query, 20).then((books) => {
+      this.setState({ books })
+    })
+  }
+
+  changeShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(
+      this.setState((state) => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([book])
+      }))
+    )
+  }
+
   render() {
+    const { query, books } = this.state
+    let showingBooks
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i')
+      showingBooks = books.filter((book) => match.test(book.title))
+    } else {
+      showingBooks = books
+    }
+
+    showingBooks.sort(sortBy('title'))
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -20,13 +55,21 @@ class SearchBooks extends Component {
                 However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                 you don't find a specific author or title. Every search is limited by search terms.
               */}
-              <input type="text" name="search-books-input" placeholder="Search by title or author"/>
-
+              <input
+                type="text"
+                name="search-books-input"
+                placeholder="Search by title or author"
+                value={this.state.query}
+                onChange={(event) => this.updateQuery(event.target.value)}
+              />
             </div>
           </form>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+            <ListBooks
+              onChangeShelf={this.changeShelf}
+              books={showingBooks}
+            />
         </div>
       </div>
     )

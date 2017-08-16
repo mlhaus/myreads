@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-//import { Link } from 'react-router-dom'
 
 function ListBooks (props) {
   return (
@@ -17,10 +16,10 @@ function ListBooks (props) {
               <div className="book-shelf-changer">
                 <select className="book-change" onChange={(event) => props.onChangeShelf(book, event.target.value)}>
                   <option value="none" disabled>Move to...</option>
-                  <option value="currentlyReading">Currently Reading</option>
-                  <option value="wantToRead">Want to Read</option>
-                  <option value="read">Read</option>
-                  <option value="none">None</option>
+                  <option selected={book.shelf === "currentlyReading"} value="currentlyReading">Currently Reading</option>
+                  <option selected={book.shelf === "wantToRead"} value="wantToRead">Want to Read</option>
+                  <option selected={book.shelf === "read"} value="read">Read</option>
+                  <option selected={book.shelf === "none" || !book.shelf } value="none">None</option>
                 </select>
               </div>
             </div>
