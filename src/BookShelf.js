@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ListBooks from './ListBooks'
+//import proptypes
 
 class BookShelf extends Component {
 
   render() {
-    const { onChangeShelf } = this.props;
+    const { onChangeShelf } = this.props
     return (
       <div className="list-books">
         <div className="list-books-title">

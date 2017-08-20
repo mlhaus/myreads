@@ -21,7 +21,7 @@ class BooksApp extends React.Component {
     const bookPos = this.state.books.indexOf(book);
 
     if (bookPos === -1) {
-      const newBook = book.slice();
+      const newBook = Object.assign({}, book);
       newBook.shelf = shelf;
       tempBooks.push(newBook);
     } else {
@@ -42,7 +42,11 @@ class BooksApp extends React.Component {
             onChangeShelf = { this.changeShelf }
           />
         )}/>
-        <Route path="/search" component={SearchBooks}/>
+        <Route exact path="/search" render={() => (
+          <SearchBooks
+            onChangeShelf = { this.changeShelf }
+          />
+        )}/>
       </div>
     )
   }
