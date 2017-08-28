@@ -6,7 +6,6 @@ import ListBooks from './ListBooks'
 class BookShelf extends Component {
 
   render() {
-    const { onChangeShelf } = this.props
     return (
       <div className="list-books">
         <div className="list-books-title">
